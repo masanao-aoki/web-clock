@@ -46,7 +46,7 @@
 	text-shadow: 0 0 1rem rgba(0,0,0,1);
 }
 
-.clock-number.is-active {
+.is-active .clock-number {
 	opacity: 1;
 }
 

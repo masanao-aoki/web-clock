@@ -1,11 +1,11 @@
 'use strict';
 
 import ClockView from './clockView';
-import Flickr from './flickr';
+import ViewPhoto from './ViewPhoto';
 
 //apiの開始
-const flickr = new Flickr();
-flickr.start();
+const viewPhoto = new ViewPhoto(document.querySelectorAll('.js-main')[0]);
+viewPhoto.start();
 
 //clockの開始
 const view = new ClockView(document.querySelectorAll('.js-clock')[0]);

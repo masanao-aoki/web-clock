@@ -3,7 +3,7 @@
 import request from 'superagent';
 import moment from 'moment';
 
-export default class Flickr {
+export default class FlickrApi {
 	constructor(){
 		this.url = 'https://api.flickr.com/services/rest/'
 		this.timeStatus = this.timeStatusCheck(moment().format('HH'));
@@ -31,35 +31,16 @@ export default class Flickr {
 		}
 		return timeStatus
 	}
-	
-	start() {
+
+	start(complate) {
 		request
 			.get(this.url)
 			.query(this.getParam)
 			.end((err, res) => {
-				const randNum = Math.floor(Math.random()*(5-0));
-				this.viewPhoto(res.body.photos.photo[randNum]);
+				const randNum = Math.floor(Math.random() * (5 - 0));
+				this.photoArray = res.body.photos.photo[randNum];
+				complate();
 			});
 	}
 
-	viewPhoto(photoArray) {
-		const {
-			farm,
-			id,
-			secret,
-			server
-		} = photoArray;
-
-		const photoUrl = `http://farm${farm}.staticflickr.com/${server}/${id}_${secret}_b.jpg`;
-		document.querySelectorAll('.js-main')[0].style.backgroundImage = `url(${photoUrl})`;
-
-		const img = new Image();
-		img.src = photoUrl;
-		img.onload = () => {
-			document.querySelectorAll('.js-main')[0].classList.add('is-active');
-			document.querySelectorAll('.js-main')[0].classList.add(`is-${this.timeStatus}`);
-			document.querySelectorAll('.js-clock')[0].classList.add('is-active');
-		};
-
-	}
 }
